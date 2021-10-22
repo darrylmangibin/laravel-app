@@ -1,13 +1,26 @@
-@extends('layouts.app')
-
-@section('title', 'Blog Posts')
+@extends('layout')
 
 @section('content')
-{{-- @each('posts.partials.post', $posts, 'post') --}}
-@forelse ($posts as $key => $post)
-  @include('posts.partials.post', [])
-@empty
-No posts found!
-@endforelse
+    @forelse ($posts as $post)
+        <p>
+            <h3>
+                <a href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post->title }}</a>
+            </h3>
 
-@endsection
+            <a href="{{ route('posts.edit', ['post' => $post->id]) }}"
+                class="btn btn-primary">
+                Edit
+            </a>
+
+            <form method="POST" class="fm-inline"
+                action="{{ route('posts.destroy', ['post' => $post->id]) }}">
+                @csrf
+                @method('DELETE')
+
+                <input type="submit" value="Delete!" class="btn btn-primary"/>
+            </form>
+        </p>
+    @empty
+        <p>No blog posts yet!</p>
+    @endforelse
+@endsection('content')
