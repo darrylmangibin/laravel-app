@@ -17,7 +17,7 @@ class PostTest extends TestCase
         $response->assertSeeText('No blog posts yet!');
     }
 
-    public function testSee1BlogPostWhenThereIs1() 
+    public function testSee1BlogPostWhenThereIs1()
     {
         // Arrange
         $post = $this->createDummyBlogPost();
@@ -27,6 +27,7 @@ class PostTest extends TestCase
 
         // Assert
         $response->assertSeeText('New title');
+        $response->assertSeeText('No comments yet!');
 
         $this->assertDatabaseHas('blog_posts', [
             'title' => 'New title'
@@ -86,7 +87,7 @@ class PostTest extends TestCase
         ]);
     }
 
-    public function testDelete() 
+    public function testDelete()
     {
         $post = $this->createDummyBlogPost();
         $this->assertDatabaseHas('blog_posts', $post->toArray());
